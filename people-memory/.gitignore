@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dev-dist/
+# モデルは npm run copy-models で node_modules からコピーする（リポジトリには含めない）
+public/models/*
+!public/models/.gitkeep
+test-results/
+*.log
+*.tsbuildinfo

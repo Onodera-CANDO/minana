@@ -1,3 +1,12 @@
+# minana
+
+このリポジトリには次の2つが入っています。
+
+- **ミンアナ Bot**（このページ下部）: Chatwork で睡眠記録を取る小さな Bot
+- **[People Memory](./people-memory/README.md)**: ローカルファーストの人脈アシスタント PWA（MVP）。`people-memory/` 配下で独立して動きます
+
+---
+
 # ミンアナ Bot
 
 Chatwork で睡眠記録を取る小さな Bot です。

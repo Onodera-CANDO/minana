@@ -1,0 +1,31 @@
+name: People Memory CI
+
+on:
+  push:
+    paths:
+      - "people-memory/**"
+      - ".github/workflows/people-memory-ci.yml"
+  pull_request:
+    paths:
+      - "people-memory/**"
+      - ".github/workflows/people-memory-ci.yml"
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: people-memory
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: people-memory/package-lock.json
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
