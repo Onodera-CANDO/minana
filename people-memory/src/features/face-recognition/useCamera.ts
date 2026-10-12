@@ -22,9 +22,9 @@ export function useCamera() {
   }, []);
 
   const start = useCallback(
-    async (mode?: 'user' | 'environment') => {
+    async (mode?: 'user' | 'environment'): Promise<boolean> => {
       const f = mode ?? facing;
-      if (!videoRef.current) return;
+      if (!videoRef.current) return false;
       stopCamera(streamRef.current, videoRef.current);
       setError(null);
       setState('starting');
@@ -32,10 +32,12 @@ export function useCamera() {
         streamRef.current = await startCamera(videoRef.current, f);
         setFacing(f);
         setState('running');
+        return true;
       } catch (e) {
         const kind = e instanceof CameraError ? e.kind : 'unknown';
         setError({ kind, message: e instanceof Error ? e.message : 'カメラを起動できませんでした' });
         setState('error');
+        return false;
       }
     },
     [facing],

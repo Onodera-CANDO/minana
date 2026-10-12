@@ -35,6 +35,7 @@ npm run dev            # 開発サーバー http://localhost:5173 （顔モデ�
 | `npm test` | ユニット／統合テスト（Vitest, 46件） |
 | `npm run typecheck` | 型チェックのみ |
 | `npm run e2e` | `build` 後に実行。headless Chromium（390×844）で主要導線のスモークテスト。スクリーンショットは `test-results/` |
+| `npm run build:artifact` | 画面確認用プレビュー（SW・CSP・顔モデルなし）を `dist-artifact/` に生成 |
 | `npm run gen:csv` | `sample-data/` のダミー CSV を再生成（CP932 版は `iconv` が必要） |
 | `npm run copy-models` | 顔モデルを `node_modules/@vladmandic/human/models` から `public/models` にコピー（dev/build 前に自動実行） |
 
@@ -49,6 +50,11 @@ E2E は Chromium のパスを自動検出します（`/opt/pw-browsers/...`）�
 - 推奨: CSP はビルド時に `<meta>` で付与済み。ホスティング側で HTTP ヘッダーとして `Content-Security-Policy`、`X-Content-Type-Options: nosniff`、`Referrer-Policy: no-referrer`、`Permissions-Policy: camera=(self), microphone=()` を付けるとより堅牢です（`frame-ancestors` はメタタグでは効かないので、クリックジャッキング対策は HTTP ヘッダー `frame-ancestors 'none'` で）。
 - 顔モデル（約 9MB）は `dist/models/` に含まれ、Service Worker が初回にキャッシュします。外部 CDN には依存しません。
 - アクセス解析・エラートラッカー等は**入れないでください**（仕様 8.2 / 10.2）。
+
+### 画面だけ確認する（claude.ai Artifact プレビュー）
+
+`npm run build:artifact` で `dist-artifact/artifact.html` を生成し、claude.ai の Artifact として公開すると、スマホのブラウザ／Claude アプリで画面を確認できます。
+この環境では Service Worker・カメラ・ファイルの書き出しが使えないため、**カメラ照合・顔登録・ホーム画面追加・オフライン・バックアップ／問題行 CSV の書き出しは確認できません**（画面上部にプレビュー版である旨を表示）。
 
 ### 実機での確認（スマホから HTTPS で開く）
 

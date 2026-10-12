@@ -80,7 +80,7 @@ export function FaceRegisterPage() {
   if (!person) return <PageHeader title="人物が見つかりません" back="/people" />;
 
   const begin = async (facing: 'user' | 'environment') => {
-    await cam.start(facing);
+    if (!(await cam.start(facing))) return;
     if (modelState === 'ready') return;
     setModelState('loading');
     setModelErr(null);

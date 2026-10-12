@@ -141,7 +141,7 @@ export function CameraPage() {
   const begin = async (facing?: 'user' | 'environment') => {
     setFatal(null);
     setCandidate(null);
-    await cam.start(facing);
+    if (!(await cam.start(facing))) return;
     if (modelState === 'ready') return;
     setModelState('loading');
     setModelErr(null);

@@ -1,10 +1,13 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+// claude.ai Artifact プレビュー時は :root に safe-area の余白が付くため、ヘッダー位置を合わせる
+const PREVIEW = import.meta.env.MODE === 'artifact';
+
 export function PageHeader({ title, back, action }: { title: string; back?: boolean | string; action?: ReactNode }) {
   const nav = useNavigate();
   return (
-    <header className="sticky top-0 z-20 flex items-center gap-2 border-b border-slate-200 bg-slate-50/90 px-3 pb-2 pt-[max(0.5rem,env(safe-area-inset-top))] backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
+    <header className={`sticky z-20 flex items-center gap-2 border-b border-slate-200 bg-slate-50/90 px-3 pb-2 backdrop-blur ${PREVIEW ? 'top-[env(safe-area-inset-top,0px)] pt-2' : 'top-0 pt-[max(0.5rem,env(safe-area-inset-top))]'} dark:border-slate-800 dark:bg-slate-950/90`}>
       {back && (
         <button
           type="button"

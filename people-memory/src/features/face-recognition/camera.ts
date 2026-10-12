@@ -1,8 +1,9 @@
 // getUserMedia のラッパー。利用者の操作時だけ起動し、終了時は必ずトラックを停止する。
 
-export type CameraErrorKind = 'insecure' | 'unsupported' | 'denied' | 'not_found' | 'busy' | 'unknown';
+export type CameraErrorKind = 'preview' | 'insecure' | 'unsupported' | 'denied' | 'not_found' | 'busy' | 'unknown';
 
 export const CAMERA_ERROR_MESSAGE: Record<CameraErrorKind, string> = {
+  preview: 'プレビュー版ではカメラを使えません。HTTPSで配信した本番ビルドで確認してください。',
   insecure: 'HTTPS（セキュアな接続）で開いていないため、カメラを使えません。HTTPSのURLで開き直してください。',
   unsupported: 'このブラウザはカメラ取得（getUserMedia）に対応していません。',
   denied: 'カメラの利用が許可されていません。ブラウザまたはOSの設定でこのサイトのカメラを許可してください。',
@@ -19,6 +20,7 @@ export class CameraError extends Error {
 }
 
 export function cameraAvailability(): CameraErrorKind | null {
+  if (import.meta.env.MODE === 'artifact') return 'preview';
   if (typeof window !== 'undefined' && !window.isSecureContext) return 'insecure';
   if (!navigator.mediaDevices?.getUserMedia) return 'unsupported';
   return null;

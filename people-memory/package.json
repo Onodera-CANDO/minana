@@ -15,6 +15,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "node scripts/e2e-smoke.mjs",
+    "build:artifact": "node scripts/build-artifact.mjs",
     "gen:csv": "node scripts/generate-dummy-csv.mjs"
   },
   "dependencies": {

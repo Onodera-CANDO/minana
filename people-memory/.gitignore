@@ -7,3 +7,4 @@ public/models/*
 test-results/
 *.log
 *.tsbuildinfo
+dist-artifact/

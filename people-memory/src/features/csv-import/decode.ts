@@ -65,7 +65,8 @@ export function parseCsv(text: string): ParsedCsv {
 export function looksGarbled(text: string): boolean {
   const sample = text.slice(0, 4000);
   if (!sample) return false;
-  const bad = (sample.match(/�/g) ?? []).length;
+  // U+FFFD（置換文字）の数。ソース・成果物に生の置換文字を残さないよう文字コードから生成
+  const bad = sample.split(String.fromCharCode(0xfffd)).length - 1;
   const hwKana = (sample.match(/[｡-ﾟ]/g) ?? []).length;
   return bad > 0 || hwKana / sample.length > 0.2;
 }
